@@ -6,7 +6,7 @@ class PessoaJuridica(Pessoa):
         self.razao_social = razao_social
 
     def validar_cnpj(self, cnpj=None):
-        if cpnj is not None:
+        if cnpj is not None:
             return True
         else:
             return False

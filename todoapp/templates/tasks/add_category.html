@@ -10,7 +10,7 @@
 
 {% block body %}
     <div class="container">
-        <h1>Adicionar Categoria </h1>
+        <h1> Categoria </h1>
         {% include 'partials/messages.html' %}
         <div class="row">
             <div class="col-md-12">
@@ -24,7 +24,7 @@
                         <label for="{{ form.description.id_for_label }}">Descrição</label>
                         {{ form.description|add_class:"form-control" }}
                     </div>
-            
+        
                     <button type="submit" class="btn btn-primary"> Adicionar </button>   
                       
                 </form> 

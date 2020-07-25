@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 
 from django.contrib import messages
 
 from .forms import CategoryForm, TaskForm
+from .models import Category, Task
 
 # Create your views here.
 
@@ -17,5 +18,29 @@ def add_category(request):
             f.save()
             messages.success(request, 'Categoria adicionada com sucesso!')
     form = CategoryForm()
+    context['form'] = form
+    return render(request, template_name, context)
+
+def list_categories(request):
+    template_name = 'tasks/list_categories.html'
+    categories = Category.objects.filter(owner=request.user)
+    context = {
+        'categories': categories
+    }
+    
+    return render(request, template_name, context)
+
+def edit_category(request, id_category):
+    template_name = 'tasks/add_category.html'
+    context = {}
+    category = get_object_or_404(Category, id=id_category, owner=request.user)
+    #category = Category.objects.get(id=id_category, owner=request.user) - funciona da msm forma mas caso dê erro, quebra o fluxo.
+    print(request.method)
+    if request.method == 'POST':
+        form = CategoryForm(request.POST, instance=category)
+        if form.is_valid():
+            form.save()
+            return redirect('category:list_categories')
+    form = CategoryForm(instance=category)
     context['form'] = form
     return render(request, template_name, context)

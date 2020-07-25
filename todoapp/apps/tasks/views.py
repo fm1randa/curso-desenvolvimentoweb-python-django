@@ -34,7 +34,7 @@ def edit_category(request, id_category):
     template_name = 'tasks/add_category.html'
     context = {}
     category = get_object_or_404(Category, id=id_category, owner=request.user)
-    #category = Category.objects.get(id=id_category, owner=request.user) - funciona da msm forma mas caso dê erro, quebra o fluxo.
+   
     print(request.method)
     if request.method == 'POST':
         form = CategoryForm(request.POST, instance=category)
@@ -44,3 +44,12 @@ def edit_category(request, id_category):
     form = CategoryForm(instance=category)
     context['form'] = form
     return render(request, template_name, context)
+
+def delete_category(request, id_category):
+    category = Category.objects.get(id=id_category) #funciona da msm forma q o get_object_or_404 mas caso dê erro, quebra o fluxo.
+    if category.owner == request.user:
+        category.delete()
+    else:
+        messages.error(request, 'Você não tem permissão para excluir esta categoria.')
+        return redirect('core:home')
+    return redirect('category:list_categories')

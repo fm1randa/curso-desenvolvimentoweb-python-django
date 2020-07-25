@@ -5,11 +5,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World</title>
+    <title> {% block title %} TodoApp {% endblock title %} </title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 </head>
 <body>
-    <h1>Hello World</h1>
-    <script src="{% static 'js/bootstrap.min.css' %}"></script>
+    <h1> TodoApp </h1>
+
+    
+    {% block body %}
+        
+    {% endblock body %}
+        
+
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
 </body>
 </html>

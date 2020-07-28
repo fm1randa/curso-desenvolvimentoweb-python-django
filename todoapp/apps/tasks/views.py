@@ -70,3 +70,23 @@ def add_task(request):
     form = TaskForm()
     context['form'] = form
     return render(request, template_name, context)
+
+def tasks_list(request):
+    template_name = 'tasks/tasks_list.html'
+    context = {}
+    tasks = Task.objects.filter(owner=request.user).exclude(status='CD')
+    context['tasks'] = tasks
+    return render(request, template_name, context)
+
+def edit_task(request, id_task):
+    template_name = 'tasks/add_task.html'
+    context = {}
+    task = get_object_or_404(Task, pk=id_task, owner=request.user)
+    if request.method == 'POST':
+        form = TaskForm(request.POST, instance=task)
+        if form.is_valid():
+            form.save()
+            return redirect('tasks:tasks_list')
+    form = TaskForm(instance=task)
+    context['form'] = form
+    return render(request, template_name, context)

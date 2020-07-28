@@ -8,8 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> {% block title %} TodoApp {% endblock title %} </title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/select2.min.css' %}">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
 </head>
 
 <body>
@@ -47,6 +47,7 @@
     <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/select2.min.js' %}"></script>
     <script>
         $(document).on('click', '.confirm-delete', function(){
             $('#confirmDeleteModal').attr('caller-id', $(this).attr('id'));
@@ -64,6 +65,12 @@
                     monthNames: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
                 }
             );
+        });
+
+        $(document).ready(function(){
+            $('#id_category').select2();
+            $('#id_priority').select2();
+            $('#id_status').select2();
         });
     </script>
 

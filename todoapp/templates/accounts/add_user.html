@@ -12,6 +12,7 @@ Novo usuário - {{ block.super }}
         <div class="row">
             <div class="col-md-12">
                 <h1> Novo usuário</h1>
+                {% include 'partials/messages.html' %}
                 <form method="POST" action=".">
                     {% csrf_token %}
                     <div class="form-group">

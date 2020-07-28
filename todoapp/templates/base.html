@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> {% block title %} TodoApp {% endblock title %} </title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
 </head>
 
 <body>
@@ -43,6 +45,7 @@
     {% endblock body %}
 
     <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script>
         $(document).on('click', '.confirm-delete', function(){
@@ -53,7 +56,17 @@
             window.location = $('#'.concat(caller)).attr('href');
         });
 
+        $(function(){
+            $('#id_end_date').datepicker(
+                {
+                    dateFormat: "dd/mm/yy",
+                    dayNamesMin: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],
+                    monthNames: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
+                }
+            );
+        });
     </script>
+
 </body>
 
 </html>

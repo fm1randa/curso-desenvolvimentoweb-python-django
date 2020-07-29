@@ -3,7 +3,7 @@
 
 
 {% block title %}
-    Alterar perfil - {{ block.super }}
+    Perfil de usuário - {{ block.super }}
 {% endblock title %}
 
 
@@ -11,7 +11,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>Alterar Perfil</h1>
+                <h1>Perfil de usuário</h1>
                 {% include 'partials/messages.html' %}
                 <form method="POST" action="." enctype="multipart/form-data">
                     {% csrf_token %}

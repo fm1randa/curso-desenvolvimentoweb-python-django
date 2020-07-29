@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
+from .forms import UserProfileForm
 # Create your views here.
 
 def add_user(request):
@@ -52,5 +53,20 @@ def user_change_password(request):
         else:
             messages.error(request, "Não foi possível alterar sua senha.")
     form = PasswordChangeForm(user=request.user)
+    context['form'] = form
+    return render(request, template_name, context)
+
+@login_required(login_url='/contas/login')
+def add_user_profile(request):
+    template_name = 'accounts/add_user_profile.html'
+    context = {}
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            f = form.save(commit=False)
+            f.user = request.user
+            f.save()
+            messages.success(request, 'Perfil alterado com sucesso.')
+    form = UserProfileForm()
     context['form'] = form
     return render(request, template_name, context)

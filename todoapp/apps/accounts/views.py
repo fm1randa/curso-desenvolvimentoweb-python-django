@@ -70,3 +70,7 @@ def add_user_profile(request):
     form = UserProfileForm()
     context['form'] = form
     return render(request, template_name, context)
+
+def list_user_profile(request):
+    template_name = 'accounts/list_user_profile.html'
+    return render(request, template_name, {})

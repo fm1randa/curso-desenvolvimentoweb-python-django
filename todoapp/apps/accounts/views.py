@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from .forms import UserProfileForm
+from .models import UserProfile
 # Create your views here.
 
 def add_user(request):
@@ -71,6 +72,30 @@ def add_user_profile(request):
     context['form'] = form
     return render(request, template_name, context)
 
+@login_required(login_url='/contas/login')
 def list_user_profile(request):
     template_name = 'accounts/list_user_profile.html'
-    return render(request, template_name, {})
+    profile = None
+    try:
+        profile = UserProfile.objects.get(user=request.user)
+    except UserProfile.DoesNotExist:
+        messages.error(request, 'Você não tem um perfil.')
+    context = {
+        'profile': profile
+    }
+    return render(request, template_name, context)
+
+@login_required(login_url='/contas/login')
+def change_user_profile(request, username):
+    template_name = 'accounts/add_user_profile.html'
+    context = {}
+    profile = UserProfile.objects.get(user__username=username)
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Perfil atualizado com sucesso!')
+    form = UserProfileForm(instance=profile)
+    context['form'] = form
+    context['profile'] = profile
+    return render(request, template_name, context)

@@ -14,18 +14,28 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>Meu Perfil</h1>
-                <div class="media">
-                    <img src="{% static 'img/user.png' %}" class="align-self-start mr-3" alt="..." width="100px">
-                    <div class="media-body">
-                        <h5 class="mt-0">Top-aligned media</h5>
-                        <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras
-                            purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi
-                            vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
-                        <p>Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque
-                            penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                
+                {% if profile %}
+                    <div class="media">
+                        <img src="{{ profile.photo.url }}" class="align-self-start mr-3 rounded-circle" alt="..." width="100px">
+                        <div class="media-body">
+                            <h5 class="mt-0">{{ profile.user.get_full_name }}</h5>
+                            <p>Celular: {{ profile.cell_phone }}</p>
+                            <p>E-mail: {{ profile.user.email }}</p>
+                            <p>Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                        </div>
                     </div>
-                </div>
-                <a href="{% url 'accounts:add_user_profile' %}" class='btn btn-primary'> Alterar perfil </a>
+
+                    <a href="{% url 'accounts:change_user_profile' user.username %}" class='btn btn-primary'> Alterar perfil </a>
+                {% else %}
+                    {% include 'partials/messagesst.html' %}
+                    <a href="{% url 'accounts:add_user_profile' %}" class='btn btn-primary'> Criar perfil </a>
+                {% endif %}
+ 
+                        
+                       
+              
+                        
             </div>
         </div>
     </div>

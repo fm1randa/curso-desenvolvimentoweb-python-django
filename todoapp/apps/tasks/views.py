@@ -5,8 +5,10 @@ from django.contrib import messages
 from .forms import CategoryForm, TaskForm
 from .models import Category, Task
 
-# Create your views here.
+from django.contrib.auth.decorators import login_required
 
+# Create your views here.
+@login_required(login_url='/contas/login/')
 def add_category(request):
     template_name = 'tasks/add_category.html'
     context = {}
@@ -21,6 +23,7 @@ def add_category(request):
     context['form'] = form
     return render(request, template_name, context)
 
+@login_required(login_url='/contas/login/')
 def list_categories(request):
     template_name = 'tasks/list_categories.html'
     categories = Category.objects.filter(owner=request.user)
@@ -30,6 +33,7 @@ def list_categories(request):
     
     return render(request, template_name, context)
 
+@login_required(login_url='/contas/login/')
 def edit_category(request, id_category):
     template_name = 'tasks/add_category.html'
     context = {}
@@ -45,6 +49,7 @@ def edit_category(request, id_category):
     context['form'] = form
     return render(request, template_name, context)
 
+@login_required(login_url='/contas/login/')
 def delete_category(request, id_category):
     category = Category.objects.get(id=id_category) #funciona da msm forma q o get_object_or_404 mas caso dê erro, quebra o fluxo.
     if category.owner == request.user:
@@ -54,6 +59,7 @@ def delete_category(request, id_category):
         return redirect('core:home')
     return redirect('category:list_categories')
 
+@login_required(login_url='/contas/login/')
 def add_task(request):
     template_name = 'tasks/add_task.html'
     context = {}
@@ -71,6 +77,7 @@ def add_task(request):
     context['form'] = form
     return render(request, template_name, context)
 
+@login_required(login_url='/contas/login/')
 def tasks_list(request):
     template_name = 'tasks/tasks_list.html'
     context = {}
@@ -78,6 +85,7 @@ def tasks_list(request):
     context['tasks'] = tasks
     return render(request, template_name, context)
 
+@login_required(login_url='/contas/login/')
 def edit_task(request, id_task):
     template_name = 'tasks/add_task.html'
     context = {}
@@ -91,6 +99,7 @@ def edit_task(request, id_task):
     context['form'] = form
     return render(request, template_name, context)
 
+@login_required(login_url='/contas/login/')
 def task_delete(request, id_task):
     task = Task.objects.get(id=id_task)
     if task.owner == request.user:

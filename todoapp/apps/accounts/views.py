@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from .forms import UserForm
 from django.contrib import messages
@@ -21,7 +21,6 @@ def add_user(request):
 
 def user_login(request):
     template_name = 'accounts/user_login.html'
-    context = {}
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -30,5 +29,5 @@ def user_login(request):
             login(request, user)
             return redirect(request.GET.get('next', '/'))
         else:
-            messages.error(request, 'Usuário ou senha inválidos.')
+            messages.warning(request, 'Usuário ou senha inválidos.')
     return render(request, template_name, {})

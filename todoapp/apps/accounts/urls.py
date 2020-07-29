@@ -12,4 +12,5 @@ urlpatterns = [
     path('meu-perfil/', views.list_user_profile, name='list_user_profile'),
     path('novo-perfil/', views.add_user_profile, name='add_user_profile'),
     path('alterar-perfil/<username>/', views.change_user_profile, name='change_user_profile'),
+    path('alterar-informacoes/<username>/', views.change_user_information, name='change_user_information'),
 ]
